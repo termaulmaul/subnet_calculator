@@ -2,12 +2,10 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
+    "outDir": "./build",
+    "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "esModuleInterop": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

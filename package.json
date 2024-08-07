@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc && mkdir -p build && cp public/* build/"
+  },
   "dependencies": {
     "express": "^4.19.2",
     "socket.io": "^4.7.5"
