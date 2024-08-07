@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subnet Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Real-Time Subnet Calculator</h1>
+    <form id="subnet-form" class="form">
+      <label for="ip">IP Address:</label>
+      <input type="text" id="ip" name="ip" required>
+      <label for="subnet-mask">Subnet Mask:</label>
+      <input type="text" id="subnet-mask" name="subnetMask" required>
+      <button type="submit">Calculate</button>
+    </form>
+    <div id="result" class="result"></div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const form = document.getElementById('subnet-form');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const ip = form.ip.value;
+      const subnetMask = form.subnetMask.value;
+      socket.emit('calculate', { ip, subnetMask });
+    });
+
+    socket.on('result', (data) => {
+      resultDiv.innerHTML = `
+        <h2>Calculation Result</h2>
+        <p><strong>IP Address:</strong> ${data.ip}</p>
+        <p><strong>Subnet Mask:</strong> ${data.subnetMask}</p>
+        <p><strong>Network Address:</strong> ${data.networkAddress}</p>
+        <p><strong>Broadcast Address:</strong> ${data.broadcastAddress}</p>
+        <p><strong>Number of Hosts:</strong> ${data.numberOfHosts}</p>
+        <p><strong>Subnet Mask (Binary):</strong> ${data.subnetMaskBinary}</p>
+        <p><strong>IP Address (Binary):</strong> ${data.ipBinary}</p>
+      `;
+    });
+  </script>
+</body>
+</html>
